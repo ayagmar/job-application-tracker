@@ -1,5 +1,6 @@
-package com.ayagmar.jobapplicationtracker.entity;
+package com.ayagmar.jobapplicationtracker.model;
 
+import com.ayagmar.jobapplicationtracker.model.record.JobPostingRecord;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,4 +22,7 @@ public class JobPosting {
 
     private String url;
 
+    public JobPostingRecord toRecord() {
+        return new JobPostingRecord(id, position, url);
+    }
 }

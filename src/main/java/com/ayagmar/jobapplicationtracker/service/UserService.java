@@ -1,8 +1,8 @@
 package com.ayagmar.jobapplicationtracker.service;
 
-import com.ayagmar.jobapplicationtracker.entity.User;
-import com.ayagmar.jobapplicationtracker.entity.UserDto;
-import com.ayagmar.jobapplicationtracker.entity.UserRepository;
+import com.ayagmar.jobapplicationtracker.model.User;
+import com.ayagmar.jobapplicationtracker.model.record.UserRecord;
+import com.ayagmar.jobapplicationtracker.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,18 +16,17 @@ public class UserService {
     private final UserRepository userRepository;
     @PostConstruct
     public void init(){
-        UserDto userDto = new UserDto(1L,"hamid","lala","hhaha");
-        System.out.println(insertUserRecord(userDto));
-        System.out.println(findUserRecordById(userDto.toUser().getId()));
+        UserRecord userRecord = new UserRecord(1L,"hamid","lala","hhaha");
+        insertUserRecord(userRecord);
     }
 
-    public UserDto findUserRecordById(Long userId){
+    public UserRecord findUserRecordById(Long userId){
         return userRepository.findById(userId)
                 .map(User::toRecord)
                 .orElse(null);
     }
 
-    public UserDto insertUserRecord(UserDto userDto){
-        return userRepository.save(userDto.toUser()).toRecord();
+    public UserRecord insertUserRecord(UserRecord userRecord){
+        return userRepository.save(userRecord.toUser()).toRecord();
     }
 }

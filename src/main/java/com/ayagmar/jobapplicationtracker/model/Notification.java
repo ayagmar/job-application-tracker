@@ -1,4 +1,4 @@
-package com.ayagmar.jobapplicationtracker.entity;
+package com.ayagmar.jobapplicationtracker.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

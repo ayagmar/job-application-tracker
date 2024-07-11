@@ -1,6 +1,6 @@
 package com.ayagmar.jobapplicationtracker.repository;
 
-import com.ayagmar.jobapplicationtracker.entity.Country;
+import com.ayagmar.jobapplicationtracker.model.Country;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

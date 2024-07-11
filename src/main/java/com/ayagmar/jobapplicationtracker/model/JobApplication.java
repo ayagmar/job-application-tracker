@@ -1,4 +1,4 @@
-package com.ayagmar.jobapplicationtracker.entity;
+package com.ayagmar.jobapplicationtracker.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,8 +13,11 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "job_applications")
-@Data
 @EqualsAndHashCode(callSuper = true)
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class JobApplication extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,13 +46,4 @@ public class JobApplication extends Auditable {
 
     private String notes;
 
-}
-@Getter
-enum ApplicationStatus {
-    APPLIED,
-    UNDER_REVIEW,
-    INTERVIEW_SCHEDULED,
-    OFFER_RECEIVED,
-    REJECTED,
-    CANCELLED
 }

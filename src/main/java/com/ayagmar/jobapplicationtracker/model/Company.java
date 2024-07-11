@@ -1,23 +1,26 @@
-package com.ayagmar.jobapplicationtracker.entity;
+package com.ayagmar.jobapplicationtracker.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
 @Entity
 @Table(name = "companies")
-@Data
 @EqualsAndHashCode(callSuper = true)
+@Builder
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Company extends Auditable {
 
     @Id

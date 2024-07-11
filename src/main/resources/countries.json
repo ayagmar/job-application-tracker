@@ -595,7 +595,8 @@
   },
   {
     "name": "Morocco",
-    "code": "MA"
+    "code": "MA",
+    "cities": ["Rabat", "Temara", "Tanger", "Tetouan", "Casablanca", "Agadir", "Merrakech"]
   },
   {
     "name": "Mozambique",

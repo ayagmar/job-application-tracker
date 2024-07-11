@@ -1,6 +1,6 @@
 package com.ayagmar.jobapplicationtracker.repository;
 
-import com.ayagmar.jobapplicationtracker.entity.InitializationStatus;
+import com.ayagmar.jobapplicationtracker.model.InitializationStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

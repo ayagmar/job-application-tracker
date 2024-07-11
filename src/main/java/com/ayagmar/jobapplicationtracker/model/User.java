@@ -1,9 +1,9 @@
-package com.ayagmar.jobapplicationtracker.entity;
+package com.ayagmar.jobapplicationtracker.model;
 
+import com.ayagmar.jobapplicationtracker.model.record.UserRecord;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +30,7 @@ public class User extends Auditable {
     @Column(nullable = false)
     private String fullName;
 
-    public UserDto toRecord() {
-        return new UserDto(id, username, password, fullName);
+    public UserRecord toRecord() {
+        return new UserRecord(id, username, password, fullName);
     }
 }
