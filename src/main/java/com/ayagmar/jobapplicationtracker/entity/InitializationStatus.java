@@ -10,14 +10,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "initialization_status")
-@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 @EqualsAndHashCode(callSuper = true)
 public class InitializationStatus extends Auditable{
     @Id

@@ -5,14 +5,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class JobApplicationTrackerApplication implements CommandLineRunner {
+public class JobApplicationTrackerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(JobApplicationTrackerApplication.class, args);
 	}
 
-	@Override
-	public void run(String... args) throws Exception {
-		System.out.println("hello");
-	}
 }

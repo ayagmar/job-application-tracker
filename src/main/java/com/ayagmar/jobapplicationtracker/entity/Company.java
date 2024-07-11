@@ -34,6 +34,4 @@ public class Company extends Auditable {
     private String industry;
 
     private String website;
-
-    // Other fields, getters, and setters
 }

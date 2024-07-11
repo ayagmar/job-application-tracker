@@ -157,7 +157,8 @@
   },
   {
     "name": "Canada",
-    "code": "CA"
+    "code": "CA",
+    "cities": ["Toronto", "Montreal", "Vancouver", "Calgary", "Ottawa"]
   },
   {
     "name": "Cape Verde",
@@ -329,7 +330,8 @@
   },
   {
     "name": "Germany",
-    "code": "DE"
+    "code": "DE",
+    "cities": ["Hamburg", "Munich", "Frankfurt", "Leipzig", "Essen"]
   },
   {
     "name": "Ghana",
@@ -873,7 +875,8 @@
   },
   {
     "name": "Switzerland",
-    "code": "CH"
+    "code": "CH",
+    "cities": ["Basel", "Bern", "Zürich", "Geneva", "Lausanne", "Winterthur", "Lugano"]
   },
   {
     "name": "Syrian Arab Republic",
@@ -953,7 +956,8 @@
   },
   {
     "name": "United States",
-    "code": "US"
+    "code": "US",
+    "cities": ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix"]
   },
   {
     "name": "United States Minor Outlying Islands",
