@@ -3,7 +3,6 @@ package com.ayagmar.jobapplicationtracker.service;
 import com.ayagmar.jobapplicationtracker.model.User;
 import com.ayagmar.jobapplicationtracker.model.record.UserRecord;
 import com.ayagmar.jobapplicationtracker.repository.UserRepository;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,11 +13,6 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class UserService {
     private final UserRepository userRepository;
-    @PostConstruct
-    public void init(){
-        UserRecord userRecord = new UserRecord(1L,"hamid","lala","hhaha");
-        insertUserRecord(userRecord);
-    }
 
     public UserRecord findUserRecordById(Long userId){
         return userRepository.findById(userId)

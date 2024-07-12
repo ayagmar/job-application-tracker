@@ -2,9 +2,8 @@ package com.ayagmar.jobapplicationtracker.service;
 
 import com.ayagmar.jobapplicationtracker.model.City;
 import com.ayagmar.jobapplicationtracker.model.Country;
-import com.ayagmar.jobapplicationtracker.model.record.CountryRecord;
 import com.ayagmar.jobapplicationtracker.model.InitializationStatus;
-import com.ayagmar.jobapplicationtracker.repository.CityRepository;
+import com.ayagmar.jobapplicationtracker.model.record.CountryRecord;
 import com.ayagmar.jobapplicationtracker.repository.CountryRepository;
 import com.ayagmar.jobapplicationtracker.repository.InitializationStatusRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -24,11 +23,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class LocationService {
-
     public static final String FILE_PATH = "countries.json";
     private final CountryRepository countryRepository;
     private final InitializationStatusRepository initializationStatusRepository;
-    private final CityRepository cityRepository;
 
     @PostConstruct
     public void init() {
