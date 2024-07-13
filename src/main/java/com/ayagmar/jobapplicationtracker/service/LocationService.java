@@ -3,7 +3,8 @@ package com.ayagmar.jobapplicationtracker.service;
 import com.ayagmar.jobapplicationtracker.model.City;
 import com.ayagmar.jobapplicationtracker.model.Country;
 import com.ayagmar.jobapplicationtracker.model.InitializationStatus;
-import com.ayagmar.jobapplicationtracker.model.record.CountryRecord;
+import com.ayagmar.jobapplicationtracker.model.record.CountryDTO;
+import com.ayagmar.jobapplicationtracker.model.record.CountryWithCitiesDTO;
 import com.ayagmar.jobapplicationtracker.repository.CountryRepository;
 import com.ayagmar.jobapplicationtracker.repository.InitializationStatusRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -26,22 +27,24 @@ public class LocationService {
     public static final String FILE_PATH = "countries.json";
     private final CountryRepository countryRepository;
     private final InitializationStatusRepository initializationStatusRepository;
+    private final GenericMapper mapper;
 
     @PostConstruct
     public void init() {
         if (!isCountriesLoaded()) {
             loadCountriesFromJson();
             setCountriesLoaded();
+            countryWithCitiesDTO();
         }
     }
 
     private void loadCountriesFromJson() {
         try (InputStream inputStream = new ClassPathResource(FILE_PATH).getInputStream()) {
             ObjectMapper objectMapper = new ObjectMapper();
-            List<CountryRecord> countryRecords = objectMapper.readValue(inputStream, new TypeReference<>() {
+            List<CountryWithCitiesDTO> countryRecords = objectMapper.readValue(inputStream, new TypeReference<>() {
             });
 
-            for (CountryRecord countryRecord : countryRecords) {
+            for (CountryWithCitiesDTO countryRecord : countryRecords) {
                 saveCountryWithCities(countryRecord);
             }
         } catch (IOException e) {
@@ -50,21 +53,26 @@ public class LocationService {
         }
     }
 
-    private void saveCountryWithCities(CountryRecord countryRecord) {
-        if (!countryRepository.existsByCode(countryRecord.code())) {
+    private CountryDTO countryWithCitiesDTO() {
+        Country country = countryRepository.findByCode("MA").get();
+        return mapper.toDto(country, CountryDTO.class);
+    }
+
+    private void saveCountryWithCities(CountryWithCitiesDTO countryRecord) {
+        if (!countryRepository.existsByCode(countryRecord.getCode())) {
             Country country = buildCountry(countryRecord);
 
-            List<City> cities = buildCities(countryRecord.cities(), country);
+            List<City> cities = buildCities(countryRecord.getCities(), country);
             country.setCities(cities);
 
             countryRepository.save(country);
         }
     }
 
-    private Country buildCountry(CountryRecord countryRecord) {
+    private Country buildCountry(CountryWithCitiesDTO countryRecord) {
         return Country.builder()
-                .name(countryRecord.name())
-                .code(countryRecord.code())
+                .name(countryRecord.getName())
+                .code(countryRecord.getCode())
                 .build();
     }
 
