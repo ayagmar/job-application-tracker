@@ -5,14 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class JobPostingDTO implements Serializable {
+public class UserDTO implements Serializable {
     private Long id;
-    private String position;
-    private String url;
-    private Long companyId;
-    private Long cityId;
+    private String username;
+    private String fullName;
+    private Set<JobApplicationDTO> jobApplications;
 }

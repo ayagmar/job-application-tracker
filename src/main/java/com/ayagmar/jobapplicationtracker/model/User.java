@@ -1,6 +1,5 @@
 package com.ayagmar.jobapplicationtracker.model;
 
-import com.ayagmar.jobapplicationtracker.model.record.UserRecord;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -42,7 +41,4 @@ public class User extends Auditable {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<JobApplication> jobApplications = new HashSet<>();
-    public UserRecord toRecord() {
-        return new UserRecord(id, username, password, fullName);
-    }
 }
