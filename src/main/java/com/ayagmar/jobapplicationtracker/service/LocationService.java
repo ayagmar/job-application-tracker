@@ -3,7 +3,6 @@ package com.ayagmar.jobapplicationtracker.service;
 import com.ayagmar.jobapplicationtracker.model.City;
 import com.ayagmar.jobapplicationtracker.model.Country;
 import com.ayagmar.jobapplicationtracker.model.InitializationStatus;
-import com.ayagmar.jobapplicationtracker.model.record.CountryDTO;
 import com.ayagmar.jobapplicationtracker.model.record.CountryWithCitiesDTO;
 import com.ayagmar.jobapplicationtracker.repository.CountryRepository;
 import com.ayagmar.jobapplicationtracker.repository.InitializationStatusRepository;
@@ -27,14 +26,12 @@ public class LocationService {
     public static final String FILE_PATH = "countries.json";
     private final CountryRepository countryRepository;
     private final InitializationStatusRepository initializationStatusRepository;
-    private final GenericMapper mapper;
 
     @PostConstruct
     public void init() {
         if (!isCountriesLoaded()) {
             loadCountriesFromJson();
             setCountriesLoaded();
-            countryWithCitiesDTO();
         }
     }
 
@@ -51,11 +48,6 @@ public class LocationService {
             log.error("Failed to load countries from JSON file: {}", FILE_PATH, e);
             throw new RuntimeException("Error loading countries from JSON", e);
         }
-    }
-
-    private CountryDTO countryWithCitiesDTO() {
-        Country country = countryRepository.findByCode("MA").get();
-        return mapper.toDto(country, CountryDTO.class);
     }
 
     private void saveCountryWithCities(CountryWithCitiesDTO countryRecord) {

@@ -4,13 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InterviewDTO {
-    private Long id;
-    private LocalDateTime interviewDate;
-    private JobApplicationDTO jobApplication;
+public class CompanyCreateDTO implements Serializable {
+    private String name;
+    private String industry;
+    private String website;
 }
