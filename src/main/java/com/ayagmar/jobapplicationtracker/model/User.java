@@ -29,16 +29,16 @@ public class User extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
+    private String firstname;
 
     @Column(nullable = false)
+    private String lastname;
+
+    @Column(nullable = false, unique = true)
     private String username;
-
-    @Column(nullable = false)
-    private String password;
-
-    @Column(nullable = false)
-    private String fullName;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<JobApplication> jobApplications = new HashSet<>();
+
 }

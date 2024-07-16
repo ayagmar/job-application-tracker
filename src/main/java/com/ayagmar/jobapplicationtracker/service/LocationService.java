@@ -24,6 +24,7 @@ import java.util.List;
 @Slf4j
 public class LocationService {
     public static final String FILE_PATH = "countries.json";
+    public static final String COUNTRIES = "countries";
     private final CountryRepository countryRepository;
     private final InitializationStatusRepository initializationStatusRepository;
 
@@ -83,14 +84,14 @@ public class LocationService {
     }
 
     private boolean isCountriesLoaded() {
-        return initializationStatusRepository.findByName("countries")
+        return initializationStatusRepository.findByName(COUNTRIES)
                 .map(InitializationStatus::isLoaded)
                 .orElse(false);
     }
 
     private void setCountriesLoaded() {
         InitializationStatus status = InitializationStatus.builder()
-                .name("countries")
+                .name(COUNTRIES)
                 .isLoaded(true)
                 .build();
         initializationStatusRepository.save(status);

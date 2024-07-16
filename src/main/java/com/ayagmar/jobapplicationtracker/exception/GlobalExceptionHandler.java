@@ -1,7 +1,6 @@
-package com.ayagmar.jobapplicationtracker.controller;
+package com.ayagmar.jobapplicationtracker.exception;
 
 
-import com.ayagmar.jobapplicationtracker.exception.EntityNotFoundException;
 import com.ayagmar.jobapplicationtracker.model.record.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +24,14 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(UsernameAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handleUsernameExists(UsernameAlreadyExistsException ex) {
+        ErrorResponse errorResponse = buildErrorResponse(ex.getMessage(), "Unique Constraint breached",
+                HttpStatus.CONFLICT.value());
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneralException(Exception ex) {
         ErrorResponse errorResponse = buildErrorResponse(ex.getMessage(), "An unexpected error occurred",
@@ -32,4 +39,5 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
 }

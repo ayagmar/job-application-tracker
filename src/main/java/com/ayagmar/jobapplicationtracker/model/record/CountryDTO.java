@@ -14,5 +14,5 @@ public class CountryDTO implements Serializable {
     private Long id;
     private String name;
     private String code;
-    private List<CityDTO> cities;
+    private List<CityResponse> cities;
 }
