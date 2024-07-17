@@ -1,11 +1,17 @@
 package com.ayagmar.jobapplicationtracker.model;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapKeyColumn;
+import jakarta.persistence.MapKeyEnumerated;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -14,7 +20,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.EnumMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -41,4 +49,19 @@ public class User extends Auditable {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<JobApplication> jobApplications = new HashSet<>();
 
+    @ElementCollection
+    @CollectionTable(name = "user_documents",
+            joinColumns = @JoinColumn(name = "user_id"))
+    @MapKeyEnumerated(EnumType.STRING)
+    @MapKeyColumn(name = "document_type")
+    @Column(name = "document_id")
+    private Map<DocumentType, Long> documents = new EnumMap<>(DocumentType.class);
+
+    public void addDocument(DocumentType type, Long documentId) {
+        this.documents.put(type, documentId);
+    }
+
+    public void removeDocument(DocumentType type) {
+        this.documents.remove(type);
+    }
 }
