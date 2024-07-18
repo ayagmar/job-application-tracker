@@ -1,9 +1,9 @@
 package com.ayagmar.jobapplicationtracker.web;
 
-import com.ayagmar.jobapplicationtracker.model.record.CompanyRequest;
-import com.ayagmar.jobapplicationtracker.model.record.CompanyResponse;
+import com.ayagmar.jobapplicationtracker.model.record.JobPostingRequest;
+import com.ayagmar.jobapplicationtracker.model.record.JobPostingResponse;
 import com.ayagmar.jobapplicationtracker.model.record.PaginatedResponse;
-import com.ayagmar.jobapplicationtracker.service.CompanyService;
+import com.ayagmar.jobapplicationtracker.service.JobPostingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,38 +25,37 @@ import static com.ayagmar.jobapplicationtracker.web.PaginationDefaults.DEFAULT_S
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/companies")
-public class CompanyResource {
-    private final CompanyService companyService;
+@RequestMapping("/api/jobs")
+public class JobPostingResource {
+    private final JobPostingService jobPostingService;
 
     @PostMapping
-    public ResponseEntity<CompanyResponse> createCompany(@RequestBody CompanyRequest companyRequest) {
-        CompanyResponse createCompany = companyService.createCompany(companyRequest);
-        return new ResponseEntity<>(createCompany, HttpStatus.CREATED);
+    public ResponseEntity<JobPostingResponse> createJobPosting(@RequestBody JobPostingRequest jobPostingRequest) {
+        JobPostingResponse jobPostingResponse = jobPostingService.createJobPosting(jobPostingRequest);
+        return new ResponseEntity<>(jobPostingResponse, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<PaginatedResponse<CompanyResponse>> getAllCompanies(
+    public ResponseEntity<PaginatedResponse<JobPostingResponse>> getAllJobPostings(
             @RequestParam(defaultValue = DEFAULT_PAGE_VALUE) int page,
             @RequestParam(defaultValue = DEFAULT_PAGE_SIZE) int size,
             @RequestParam(defaultValue = DEFAULT_SORT_ATTRIBUTE) String sortBy) {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
-        PaginatedResponse<CompanyResponse> companyPage = companyService.getAllCompaniesByPage(pageable);
+        PaginatedResponse<JobPostingResponse> jobPostingPage = jobPostingService.getAllJobPostingsByPage(pageable);
 
-        return new ResponseEntity<>(companyPage, HttpStatus.OK);
+        return new ResponseEntity<>(jobPostingPage, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CompanyResponse> getCompanyById(@PathVariable Long id) {
-        CompanyResponse userResponse = companyService.getCompanyById(id);
-        return new ResponseEntity<>(userResponse, HttpStatus.OK);
+    public ResponseEntity<JobPostingResponse> getCompanyById(@PathVariable Long id) {
+        JobPostingResponse jobPostingResponse = jobPostingService.getJobPostingById(id);
+        return new ResponseEntity<>(jobPostingResponse, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteCompany(@PathVariable Long id) {
-        companyService.deleteCompany(id);
-        return ResponseEntity.ok().body("company " + id + " deleted successfully");
+    public ResponseEntity<Void> deleteJobPosting(@PathVariable Long id) {
+        jobPostingService.deleteJobPostingById(id);
+        return ResponseEntity.noContent().build();
     }
-
 }
