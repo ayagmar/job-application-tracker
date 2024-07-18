@@ -1,4 +1,4 @@
-package com.ayagmar.jobapplicationtracker.controller;
+package com.ayagmar.jobapplicationtracker.web;
 
 import com.ayagmar.jobapplicationtracker.model.record.PaginatedResponse;
 import com.ayagmar.jobapplicationtracker.model.record.UserRequest;
@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import static com.ayagmar.jobapplicationtracker.web.PaginationDefaults.DEFAULT_PAGE_SIZE;
+import static com.ayagmar.jobapplicationtracker.web.PaginationDefaults.DEFAULT_PAGE_VALUE;
+import static com.ayagmar.jobapplicationtracker.web.PaginationDefaults.DEFAULT_SORT_ATTRIBUTE;
 
 @RestController
 @RequiredArgsConstructor
@@ -39,12 +43,12 @@ public class UserResource {
 
     @GetMapping
     public ResponseEntity<PaginatedResponse<UserResponse>> getAllUsers(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "id") String sortBy) {
+            @RequestParam(defaultValue = DEFAULT_PAGE_VALUE) int page,
+            @RequestParam(defaultValue = DEFAULT_PAGE_SIZE) int size,
+            @RequestParam(defaultValue = DEFAULT_SORT_ATTRIBUTE) String sortBy) {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
-        PaginatedResponse<UserResponse> userPage = userService.getAllUsers(pageable);
+        PaginatedResponse<UserResponse> userPage = userService.getAllUsersByPage(pageable);
 
         return new ResponseEntity<>(userPage, HttpStatus.OK);
     }

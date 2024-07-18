@@ -2,6 +2,7 @@ package com.ayagmar.jobapplicationtracker.service;
 
 import com.ayagmar.jobapplicationtracker.model.City;
 import com.ayagmar.jobapplicationtracker.model.Company;
+import com.ayagmar.jobapplicationtracker.model.Country;
 import com.ayagmar.jobapplicationtracker.model.Document;
 import com.ayagmar.jobapplicationtracker.model.InitializationStatus;
 import com.ayagmar.jobapplicationtracker.model.Interview;
@@ -22,6 +23,7 @@ import com.ayagmar.jobapplicationtracker.model.record.JobApplicationRequest;
 import com.ayagmar.jobapplicationtracker.model.record.JobApplicationResponse;
 import com.ayagmar.jobapplicationtracker.model.record.JobPostingRequest;
 import com.ayagmar.jobapplicationtracker.model.record.JobPostingResponse;
+import com.ayagmar.jobapplicationtracker.model.record.SimpleCountryResponse;
 import com.ayagmar.jobapplicationtracker.model.record.UserRequest;
 import com.ayagmar.jobapplicationtracker.model.record.UserResponse;
 import org.mapstruct.Mapper;
@@ -33,6 +35,8 @@ public interface EntityMapper {
     User toEntity(UserRequest userRequest);
 
     CityResponse toDTO(City city);
+
+    SimpleCountryResponse toDTO(Country country);
 
     City toEntity(CityRequest city);
 

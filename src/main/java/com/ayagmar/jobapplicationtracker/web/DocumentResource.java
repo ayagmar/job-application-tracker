@@ -1,4 +1,4 @@
-package com.ayagmar.jobapplicationtracker.controller;
+package com.ayagmar.jobapplicationtracker.web;
 
 import com.ayagmar.jobapplicationtracker.model.record.DocumentRequest;
 import com.ayagmar.jobapplicationtracker.model.record.DocumentResponse;

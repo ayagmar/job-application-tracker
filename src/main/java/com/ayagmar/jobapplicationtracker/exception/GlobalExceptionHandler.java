@@ -11,10 +11,6 @@ import java.time.LocalDateTime;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    private static ErrorResponse buildErrorResponse(String exceptionMessage, String details, int status) {
-        return new ErrorResponse(exceptionMessage,
-                details, status, LocalDateTime.now());
-    }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleUserNotFoundException(EntityNotFoundException ex) {
@@ -31,12 +27,10 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
-    @ExceptionHandler(UsernameAlreadyExistsException.class)
-    public ResponseEntity<ErrorResponse> handleUsernameExists(UsernameAlreadyExistsException ex) {
-        ErrorResponse errorResponse = buildErrorResponse(ex.getMessage(), "Unique Constraint breached",
-                HttpStatus.CONFLICT.value());
 
-        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    private static ErrorResponse buildErrorResponse(String exceptionMessage, String details, int status) {
+        return new ErrorResponse(exceptionMessage,
+                details, status, LocalDateTime.now());
     }
 
     @ExceptionHandler(Exception.class)
@@ -45,6 +39,14 @@ public class GlobalExceptionHandler {
                 HttpStatus.INTERNAL_SERVER_ERROR.value());
 
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler({FieldAlreadyExists.class, IllegalStateException.class})
+    public ResponseEntity<ErrorResponse> handleFieldAlreadyExistsException(FieldAlreadyExists ex) {
+        ErrorResponse errorResponse = buildErrorResponse(ex.getMessage(), "Unique Constraint breached",
+                HttpStatus.CONFLICT.value());
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 
 }

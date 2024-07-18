@@ -1,10 +1,11 @@
 package com.ayagmar.jobapplicationtracker.service;
 
 import com.ayagmar.jobapplicationtracker.exception.EntityNotFoundException;
-import com.ayagmar.jobapplicationtracker.exception.UsernameAlreadyExistsException;
+import com.ayagmar.jobapplicationtracker.exception.FieldAlreadyExists;
 import com.ayagmar.jobapplicationtracker.model.DocumentType;
 import com.ayagmar.jobapplicationtracker.model.User;
 import com.ayagmar.jobapplicationtracker.model.record.PaginatedResponse;
+import com.ayagmar.jobapplicationtracker.model.record.PaginatedResponseFactory;
 import com.ayagmar.jobapplicationtracker.model.record.UserRequest;
 import com.ayagmar.jobapplicationtracker.model.record.UserResponse;
 import com.ayagmar.jobapplicationtracker.repository.DocumentRepository;
@@ -45,32 +46,21 @@ public class UserService {
     public void deleteUser(Long id) {
         getUserById(id);
         userRepository.deleteById(id);
-        log.info("User with id " + id + " is been deleted");
+        log.info("User with id " + id + " is deleted");
     }
 
     @Transactional(readOnly = true)
-    public Page<UserResponse> fetchUsersPage(Pageable pageable) {
+    public PaginatedResponse<UserResponse> getAllUsersByPage(Pageable pageable) {
         Page<User> users = userRepository.findAll(pageable);
         log.info("Retrieved {} users", users.getTotalElements());
-        return users.map(mapper::toDTO);
+        Page<UserResponse> userResponsePage = users.map(mapper::toDTO);
+        return PaginatedResponseFactory.createFrom(userResponsePage);
     }
 
-    @Transactional(readOnly = true)
-    public PaginatedResponse<UserResponse> getAllUsers(Pageable pageable) {
-        Page<UserResponse> userResponsePage = fetchUsersPage(pageable);
-        return PaginatedResponse.<UserResponse>builder()
-                .first(userResponsePage.isFirst())
-                .last(userResponsePage.isLast())
-                .pageSize(userResponsePage.getSize())
-                .totalElements(userResponsePage.getTotalElements())
-                .totalPages(userResponsePage.getTotalPages())
-                .response(userResponsePage.getContent())
-                .build();
-    }
 
     private void validateUsername(String username) {
         userRepository.findByUsername(username).ifPresent(user -> {
-            throw new UsernameAlreadyExistsException("Username already exists: " + username);
+            throw new FieldAlreadyExists("Username already exists: " + username);
         });
     }
 

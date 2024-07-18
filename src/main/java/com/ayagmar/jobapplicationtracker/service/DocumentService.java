@@ -23,9 +23,15 @@ public class DocumentService {
 
     @Transactional
     public DocumentResponse createDocument(MultipartFile file, DocumentRequest documentRequest) {
+        if (file == null || file.isEmpty()) {
+            throw new IllegalArgumentException("File is required and must not be empty");
+        }
         User user = userRepository.findById(documentRequest.getUserId())
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
+        if (user.getDocuments().containsKey(documentRequest.getType())) {
+            throw new IllegalStateException("A document of type " + documentRequest.getType() + " already exists for this user");
+        }
         try {
             Document document = Document.builder()
                     .fileName(file.getOriginalFilename())

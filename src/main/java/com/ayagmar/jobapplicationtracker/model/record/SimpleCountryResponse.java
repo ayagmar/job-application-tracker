@@ -5,7 +5,8 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class CityRequest implements Serializable {
+public class SimpleCountryResponse implements Serializable {
+    private Long id;
+    private String code;
     private String name;
-    private String countryCode;
 }

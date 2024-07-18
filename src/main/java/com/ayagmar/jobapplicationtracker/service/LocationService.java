@@ -19,6 +19,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+import static org.apache.commons.lang3.BooleanUtils.isFalse;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -30,13 +34,13 @@ public class LocationService {
 
     @PostConstruct
     public void init() {
-        if (!isCountriesLoaded()) {
+        if (isFalse(isCountriesLoaded())) {
             loadCountriesFromJson();
-            setCountriesLoaded();
         }
     }
 
     private void loadCountriesFromJson() {
+        boolean isLoaded = FALSE;
         try (InputStream inputStream = new ClassPathResource(FILE_PATH).getInputStream()) {
             ObjectMapper objectMapper = new ObjectMapper();
             List<CountryWithCitiesDTO> countryRecords = objectMapper.readValue(inputStream, new TypeReference<>() {
@@ -45,14 +49,17 @@ public class LocationService {
             for (CountryWithCitiesDTO countryRecord : countryRecords) {
                 saveCountryWithCities(countryRecord);
             }
+            isLoaded = TRUE;
         } catch (IOException e) {
             log.error("Failed to load countries from JSON file: {}", FILE_PATH, e);
             throw new RuntimeException("Error loading countries from JSON", e);
+        } finally {
+            setCountriesLoaded(isLoaded);
         }
     }
 
     private void saveCountryWithCities(CountryWithCitiesDTO countryRecord) {
-        if (!countryRepository.existsByCode(countryRecord.getCode())) {
+        if (isFalse(countryRepository.existsByCode(countryRecord.getCode()))) {
             Country country = buildCountry(countryRecord);
 
             List<City> cities = buildCities(countryRecord.getCities(), country);
@@ -89,11 +96,12 @@ public class LocationService {
                 .orElse(false);
     }
 
-    private void setCountriesLoaded() {
+    private void setCountriesLoaded(boolean isLoaded) {
         InitializationStatus status = InitializationStatus.builder()
                 .name(COUNTRIES)
-                .isLoaded(true)
+                .isLoaded(isLoaded)
                 .build();
+        log.info(COUNTRIES + " loaded successfully");
         initializationStatusRepository.save(status);
     }
 }
