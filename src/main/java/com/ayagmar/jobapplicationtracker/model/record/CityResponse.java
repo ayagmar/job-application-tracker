@@ -9,4 +9,5 @@ public class CityResponse implements Serializable {
     private Long id;
     private String name;
     private SimpleCountryResponse country;
+//    private Set<JobPostingResponse> jobPostings;
 }

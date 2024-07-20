@@ -27,6 +27,7 @@ import com.ayagmar.jobapplicationtracker.model.record.SimpleCountryResponse;
 import com.ayagmar.jobapplicationtracker.model.record.UserRequest;
 import com.ayagmar.jobapplicationtracker.model.record.UserResponse;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring", uses = {EntityMapper.class})
 public interface EntityMapper {
@@ -52,8 +53,11 @@ public interface EntityMapper {
 
     JobApplication toEntity(JobApplicationRequest jobApplicationRequest);
 
+
     JobPostingResponse toDTO(JobPosting jobPosting);
 
+    @Mapping(target = "company", ignore = true)
+    @Mapping(target = "city", ignore = true)
     JobPosting toEntity(JobPostingRequest jobPostingRequest);
 
     InitializationStatusDTO toDTO(InitializationStatus initializationStatus);

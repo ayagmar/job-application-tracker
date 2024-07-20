@@ -28,20 +28,28 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalStateException(IllegalStateException ex) {
+        ErrorResponse errorResponse = buildErrorResponse(ex.getMessage(), "Illegal State Exception",
+                HttpStatus.EXPECTATION_FAILED.value());
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.EXPECTATION_FAILED);
+    }
+
     private static ErrorResponse buildErrorResponse(String exceptionMessage, String details, int status) {
         return new ErrorResponse(exceptionMessage,
                 details, status, LocalDateTime.now());
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleGeneralException(Exception ex) {
-        ErrorResponse errorResponse = buildErrorResponse(ex.getMessage(), "An unexpected error occurred",
-                HttpStatus.INTERNAL_SERVER_ERROR.value());
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<ErrorResponse> handleGeneralException(Exception ex) {
+//        ErrorResponse errorResponse = buildErrorResponse(ex.getMessage(), "An unexpected error occurred",
+//                HttpStatus.INTERNAL_SERVER_ERROR.value());
+//
+//        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
 
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @ExceptionHandler({FieldAlreadyExists.class, IllegalStateException.class})
+    @ExceptionHandler(FieldAlreadyExists.class)
     public ResponseEntity<ErrorResponse> handleFieldAlreadyExistsException(FieldAlreadyExists ex) {
         ErrorResponse errorResponse = buildErrorResponse(ex.getMessage(), "Unique Constraint breached",
                 HttpStatus.CONFLICT.value());

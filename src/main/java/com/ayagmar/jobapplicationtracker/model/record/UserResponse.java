@@ -5,7 +5,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Map;
-import java.util.Set;
 
 @Data
 public class UserResponse implements Serializable {
@@ -13,6 +12,5 @@ public class UserResponse implements Serializable {
     private String username;
     private String firstname;
     private String lastname;
-    private Set<JobApplicationResponse> jobApplications;
     private Map<DocumentType, Long> documents;
 }

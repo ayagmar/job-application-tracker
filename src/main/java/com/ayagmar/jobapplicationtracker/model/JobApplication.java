@@ -18,7 +18,6 @@ import jakarta.persistence.MapKeyEnumerated;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,7 +29,6 @@ import java.util.Map;
 
 @Entity
 @Table(name = "job_applications")
-@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @AllArgsConstructor
@@ -67,5 +65,16 @@ public class JobApplication extends Auditable {
     @MapKeyColumn(name = "document_type")
     @Column(name = "document_id")
     private Map<DocumentType, Long> documents = new EnumMap<>(DocumentType.class);
+
+    public void addDocument(DocumentType type, Long documentId) {
+        if (documents == null) {
+            documents = new EnumMap<>(DocumentType.class);
+        }
+        this.documents.put(type, documentId);
+    }
+
+    public void removeDocument(DocumentType type) {
+        this.documents.remove(type);
+    }
 
 }

@@ -34,7 +34,7 @@ public class CompanyService {
     @Transactional(readOnly = true)
     public CompanyResponse getCompanyById(Long id) {
         var company = companyRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("company " + id + " is not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Company " + id + " is not found"));
         return entityMapper.toDTO(company);
     }
 

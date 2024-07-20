@@ -16,7 +16,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -32,7 +31,6 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 public class User extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,6 +56,9 @@ public class User extends Auditable {
     private Map<DocumentType, Long> documents = new EnumMap<>(DocumentType.class);
 
     public void addDocument(DocumentType type, Long documentId) {
+        if (documents == null) {
+            documents = new EnumMap<>(DocumentType.class);
+        }
         this.documents.put(type, documentId);
     }
 

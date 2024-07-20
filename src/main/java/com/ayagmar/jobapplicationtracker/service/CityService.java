@@ -24,6 +24,7 @@ public class CityService {
     private final CountryRepository countryRepository;
     private final EntityMapper mapper;
 
+    @Transactional
     public CityResponse createCity(CityRequest cityRequest) {
         validateName(cityRequest.getName());
         var city = mapper.toEntity(cityRequest);
@@ -35,6 +36,7 @@ public class CityService {
         return mapper.toDTO(savedCity);
     }
 
+    @Transactional(readOnly = true)
     public PaginatedResponse<CityResponse> getAllCities(Pageable pageable) {
         Page<City> cities = cityRepository.findAll(pageable);
         log.info("Retrieved {} cities", cities.getTotalElements());
