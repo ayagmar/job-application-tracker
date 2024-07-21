@@ -3,37 +3,24 @@ package com.ayagmar.jobapplicationtracker.exception;
 
 import com.ayagmar.jobapplicationtracker.model.record.ErrorResponse;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.ProblemDetail;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleUserNotFoundException(EntityNotFoundException ex) {
-        ErrorResponse errorResponse = buildErrorResponse(ex.getMessage(), "Entity not found",
-                HttpStatus.NOT_FOUND.value());
-
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException ex) {
-        ErrorResponse errorResponse = buildErrorResponse(ex.getMessage(), "Illegal Argument Exception",
-                HttpStatus.BAD_REQUEST.value());
-
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(IllegalStateException.class)
-    public ResponseEntity<ErrorResponse> handleIllegalStateException(IllegalStateException ex) {
-        ErrorResponse errorResponse = buildErrorResponse(ex.getMessage(), "Illegal State Exception",
-                HttpStatus.EXPECTATION_FAILED.value());
-
-        return new ResponseEntity<>(errorResponse, HttpStatus.EXPECTATION_FAILED);
+    private static ProblemDetail toProblemDetails(HttpStatus status, String ex, String title) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(status, ex);
+        problemDetail.setTitle(title);
+        problemDetail.setProperty("errorCategory", "Generic Exception");
+        problemDetail.setProperty("timestamp", Instant.now());
+        return problemDetail;
     }
 
     private static ErrorResponse buildErrorResponse(String exceptionMessage, String details, int status) {
@@ -41,20 +28,34 @@ public class GlobalExceptionHandler {
                 details, status, LocalDateTime.now());
     }
 
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<ErrorResponse> handleGeneralException(Exception ex) {
-//        ErrorResponse errorResponse = buildErrorResponse(ex.getMessage(), "An unexpected error occurred",
-//                HttpStatus.INTERNAL_SERVER_ERROR.value());
-//
-//        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
+    @ExceptionHandler(EntityNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ProblemDetail handleEntityNotFound(EntityNotFoundException ex) {
+        return toProblemDetails(HttpStatus.NOT_FOUND, ex.getLocalizedMessage(), "Entity is Not Found");
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ProblemDetail handleIllegalArgumentException(IllegalArgumentException ex) {
+        return toProblemDetails(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), "Illegal Argument Exception");
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ProblemDetail handleIllegalStateException(IllegalStateException ex) {
+        return toProblemDetails(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), "Illegal State Exception");
+    }
 
     @ExceptionHandler(FieldAlreadyExists.class)
-    public ResponseEntity<ErrorResponse> handleFieldAlreadyExistsException(FieldAlreadyExists ex) {
-        ErrorResponse errorResponse = buildErrorResponse(ex.getMessage(), "Unique Constraint breached",
-                HttpStatus.CONFLICT.value());
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ProblemDetail handleFieldAlreadyExistsException(FieldAlreadyExists ex) {
+        return toProblemDetails(HttpStatus.CONFLICT, ex.getLocalizedMessage(), "Field Already Exists");
+    }
 
-        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    public ProblemDetail handleMethodNotAllowed(HttpRequestMethodNotSupportedException ex) {
+        return toProblemDetails(HttpStatus.METHOD_NOT_ALLOWED, ex.getLocalizedMessage(), "Http Method Not Allowed");
     }
 
 }

@@ -51,6 +51,13 @@ public interface EntityMapper {
 
     JobApplicationResponse toDTO(JobApplication jobApplication);
 
+
+    @Mapping(target = "user", ignore = true)
+    @Mapping(target = "jobPosting", ignore = true)
+    @Mapping(target = "documents", ignore = true)
+    @Mapping(target = "applicationDate", ignore = true)
+    @Mapping(target = "lastStatusChangeDate", ignore = true)
+    @Mapping(target = "status", ignore = true)
     JobApplication toEntity(JobApplicationRequest jobApplicationRequest);
 
 
