@@ -1,0 +1,47 @@
+#actuator
+management:
+  endpoints:
+    web:
+      base-path: /rest/actuator
+      exposure:
+        include: 'prometheus,health,caches'
+
+
+#db
+spring:
+  h2:
+    console:
+      enabled: 'true'
+  datasource:
+    username: sa
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    password: ''
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+
+
+springdoc:
+  version: '@org.springdoc.openapi.version@'
+  show-actuator: 'true'
+  api-docs:
+    version: openapi_3_1
+  swagger-ui:
+    display-request-duration: true
+    operations-sorter: method
+    use-root-path: true
+
+  cache:
+    disabled: true
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: INFO
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE

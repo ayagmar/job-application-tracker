@@ -4,6 +4,7 @@ import com.ayagmar.jobapplicationtracker.exception.EntityNotFoundException;
 import com.ayagmar.jobapplicationtracker.exception.FieldAlreadyExists;
 import com.ayagmar.jobapplicationtracker.model.DocumentType;
 import com.ayagmar.jobapplicationtracker.model.User;
+import com.ayagmar.jobapplicationtracker.model.mapper.UserMapper;
 import com.ayagmar.jobapplicationtracker.model.record.PaginatedResponse;
 import com.ayagmar.jobapplicationtracker.model.record.PaginatedResponseFactory;
 import com.ayagmar.jobapplicationtracker.model.record.UserRequest;
@@ -23,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
     private final DocumentRepository documentRepository;
     private final UserRepository userRepository;
-    private final EntityMapper mapper;
+    private final UserMapper mapper;
 
     @Transactional
     public UserResponse createUser(UserRequest userRequest) {

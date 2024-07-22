@@ -3,6 +3,7 @@ package com.ayagmar.jobapplicationtracker.service;
 import com.ayagmar.jobapplicationtracker.exception.EntityNotFoundException;
 import com.ayagmar.jobapplicationtracker.exception.FieldAlreadyExists;
 import com.ayagmar.jobapplicationtracker.model.City;
+import com.ayagmar.jobapplicationtracker.model.mapper.CityMapper;
 import com.ayagmar.jobapplicationtracker.model.record.CityRequest;
 import com.ayagmar.jobapplicationtracker.model.record.CityResponse;
 import com.ayagmar.jobapplicationtracker.model.record.PaginatedResponse;
@@ -26,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CityService {
     private final CityRepository cityRepository;
     private final CountryRepository countryRepository;
-    private final EntityMapper mapper;
+    private final CityMapper mapper;
 
     @Transactional
     public CityResponse createCity(CityRequest cityRequest) {

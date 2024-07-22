@@ -3,29 +3,25 @@ package com.ayagmar.jobapplicationtracker.web;
 import com.ayagmar.jobapplicationtracker.model.record.DocumentRequest;
 import com.ayagmar.jobapplicationtracker.model.record.DocumentResponse;
 import com.ayagmar.jobapplicationtracker.service.DocumentService;
+import com.ayagmar.jobapplicationtracker.web.api.DocumentApi;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/documents")
-public class DocumentResource {
+public class DocumentResource implements DocumentApi {
     private final DocumentService documentService;
 
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Override
     public ResponseEntity<DocumentResponse> createDocument(
             @RequestParam("file") MultipartFile file,
             @Valid @ModelAttribute DocumentRequest documentRequest) {
@@ -33,19 +29,22 @@ public class DocumentResource {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdDocument);
     }
 
-    @GetMapping("/{id}")
+
+    @Override
     public ResponseEntity<DocumentResponse> getDocumentById(@PathVariable Long id) {
         DocumentResponse document = documentService.getDocumentById(id);
         return ResponseEntity.ok(document);
     }
 
-    @DeleteMapping("/{id}")
+
+    @Override
     public ResponseEntity<Void> deleteDocument(@PathVariable Long id) {
         documentService.deleteDocument(id);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{id}/data")
+
+    @Override
     public ResponseEntity<byte[]> getDocumentData(@PathVariable Long id) {
         byte[] documentData = documentService.getDocumentData(id);
         DocumentResponse document = documentService.getDocumentById(id);

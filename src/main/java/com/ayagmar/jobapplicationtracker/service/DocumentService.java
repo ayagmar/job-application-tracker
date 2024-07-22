@@ -3,6 +3,7 @@ package com.ayagmar.jobapplicationtracker.service;
 import com.ayagmar.jobapplicationtracker.exception.EntityNotFoundException;
 import com.ayagmar.jobapplicationtracker.model.Document;
 import com.ayagmar.jobapplicationtracker.model.User;
+import com.ayagmar.jobapplicationtracker.model.mapper.DocumentMapper;
 import com.ayagmar.jobapplicationtracker.model.record.DocumentRequest;
 import com.ayagmar.jobapplicationtracker.model.record.DocumentResponse;
 import com.ayagmar.jobapplicationtracker.repository.DocumentRepository;
@@ -19,7 +20,7 @@ import java.io.IOException;
 public class DocumentService {
     private final DocumentRepository documentRepository;
     private final UserRepository userRepository;
-    private final EntityMapper documentMapper;
+    private final DocumentMapper documentMapper;
 
     @Transactional
     public DocumentResponse createDocument(MultipartFile file, DocumentRequest documentRequest) {

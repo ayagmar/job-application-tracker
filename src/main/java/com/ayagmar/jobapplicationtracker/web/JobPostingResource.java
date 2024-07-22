@@ -4,47 +4,44 @@ import com.ayagmar.jobapplicationtracker.model.record.JobPostingRequest;
 import com.ayagmar.jobapplicationtracker.model.record.JobPostingResponse;
 import com.ayagmar.jobapplicationtracker.model.record.PaginatedResponse;
 import com.ayagmar.jobapplicationtracker.service.JobPostingService;
+import com.ayagmar.jobapplicationtracker.web.api.JobPostingApi;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/jobs")
-public class JobPostingResource {
+
+public class JobPostingResource implements JobPostingApi {
     private final JobPostingService jobPostingService;
 
-    @PostMapping
+    @Override
     public ResponseEntity<JobPostingResponse> createJobPosting(@RequestBody JobPostingRequest jobPostingRequest) {
         JobPostingResponse jobPostingResponse = jobPostingService.createJobPosting(jobPostingRequest);
-        return new ResponseEntity<>(jobPostingResponse, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(jobPostingResponse);
     }
 
-    @GetMapping
+    @Override
     public ResponseEntity<PaginatedResponse<JobPostingResponse>> getAllJobPostings(@ParameterObject Pageable pageable) {
-
         PaginatedResponse<JobPostingResponse> jobPostingPage = jobPostingService.getAllJobPostingsByPage(pageable);
-
-        return new ResponseEntity<>(jobPostingPage, HttpStatus.OK);
+        return ResponseEntity.ok(jobPostingPage);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<JobPostingResponse> getCompanyById(@PathVariable Long id) {
+
+    @Override
+    public ResponseEntity<JobPostingResponse> getJobPostingById(@PathVariable Long id) {
         JobPostingResponse jobPostingResponse = jobPostingService.getJobPostingById(id);
-        return new ResponseEntity<>(jobPostingResponse, HttpStatus.OK);
+        return ResponseEntity.ok(jobPostingResponse);
     }
 
-    @DeleteMapping("/{id}")
+
+    @Override
     public ResponseEntity<Void> deleteJobPosting(@PathVariable Long id) {
         jobPostingService.deleteJobPostingById(id);
         return ResponseEntity.noContent().build();

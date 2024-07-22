@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CountryCreateDTO implements Serializable {
+public class CountryRequest implements Serializable {
     private String name;
     private String code;
 }

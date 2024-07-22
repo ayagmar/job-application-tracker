@@ -4,6 +4,7 @@ import com.ayagmar.jobapplicationtracker.exception.EntityNotFoundException;
 import com.ayagmar.jobapplicationtracker.model.ApplicationStatus;
 import com.ayagmar.jobapplicationtracker.model.DocumentType;
 import com.ayagmar.jobapplicationtracker.model.JobApplication;
+import com.ayagmar.jobapplicationtracker.model.mapper.JobApplicationMapper;
 import com.ayagmar.jobapplicationtracker.model.record.JobApplicationRequest;
 import com.ayagmar.jobapplicationtracker.model.record.JobApplicationResponse;
 import com.ayagmar.jobapplicationtracker.model.record.PaginatedResponse;
@@ -30,7 +31,7 @@ public class JobApplicationService {
     private final UserRepository userRepository;
     private final DocumentRepository documentRepository;
     private final JobApplicationRepository jobApplicationRepository;
-    private final EntityMapper mapper;
+    private final JobApplicationMapper mapper;
 
     public JobApplicationResponse createJobApp(JobApplicationRequest jobApplicationRequest) {
         var jobApplication = mapper.toEntity(jobApplicationRequest);

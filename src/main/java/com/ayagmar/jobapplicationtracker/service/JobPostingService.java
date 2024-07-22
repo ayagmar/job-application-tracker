@@ -2,6 +2,7 @@ package com.ayagmar.jobapplicationtracker.service;
 
 import com.ayagmar.jobapplicationtracker.exception.EntityNotFoundException;
 import com.ayagmar.jobapplicationtracker.model.JobPosting;
+import com.ayagmar.jobapplicationtracker.model.mapper.JobPostingMapper;
 import com.ayagmar.jobapplicationtracker.model.record.JobPostingRequest;
 import com.ayagmar.jobapplicationtracker.model.record.JobPostingResponse;
 import com.ayagmar.jobapplicationtracker.model.record.PaginatedResponse;
@@ -23,7 +24,7 @@ public class JobPostingService {
     private final JobPostingRepository jobPostingRepository;
     private final CompanyRepository companyRepository;
     private final CityRepository cityRepository;
-    private final EntityMapper entityMapper;
+    private final JobPostingMapper entityMapper;
 
     @Transactional
     public JobPostingResponse createJobPosting(JobPostingRequest jobPostingRequest) {

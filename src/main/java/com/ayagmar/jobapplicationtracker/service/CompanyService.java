@@ -3,6 +3,7 @@ package com.ayagmar.jobapplicationtracker.service;
 import com.ayagmar.jobapplicationtracker.exception.EntityNotFoundException;
 import com.ayagmar.jobapplicationtracker.exception.FieldAlreadyExists;
 import com.ayagmar.jobapplicationtracker.model.Company;
+import com.ayagmar.jobapplicationtracker.model.mapper.CompanyMapper;
 import com.ayagmar.jobapplicationtracker.model.record.CompanyRequest;
 import com.ayagmar.jobapplicationtracker.model.record.CompanyResponse;
 import com.ayagmar.jobapplicationtracker.model.record.PaginatedResponse;
@@ -20,22 +21,22 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CompanyService {
     private final CompanyRepository companyRepository;
-    private final EntityMapper entityMapper;
+    private final CompanyMapper mapper;
 
     @Transactional
     public CompanyResponse createCompany(CompanyRequest companyRequest) {
         validateName(companyRequest.getName());
-        var company = entityMapper.toEntity(companyRequest);
+        var company = mapper.toEntity(companyRequest);
         company = companyRepository.save(company);
         log.info("Company created with name: {}", company.getName());
-        return entityMapper.toDTO(company);
+        return mapper.toDTO(company);
     }
 
     @Transactional(readOnly = true)
     public CompanyResponse getCompanyById(Long id) {
         var company = companyRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Company " + id + " is not found"));
-        return entityMapper.toDTO(company);
+        return mapper.toDTO(company);
     }
 
     @Transactional
@@ -56,7 +57,7 @@ public class CompanyService {
         Page<Company> companies = companyRepository.findAll(pageable);
         log.info("Retrieved {} companies", companies.getTotalElements());
 
-        Page<CompanyResponse> companyResponsePage = companies.map(entityMapper::toDTO);
+        Page<CompanyResponse> companyResponsePage = companies.map(mapper::toDTO);
         return PaginatedResponseFactory.createFrom(companyResponsePage);
     }
 
