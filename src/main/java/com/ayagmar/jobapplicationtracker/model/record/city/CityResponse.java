@@ -1,5 +1,6 @@
-package com.ayagmar.jobapplicationtracker.model.record;
+package com.ayagmar.jobapplicationtracker.model.record.city;
 
+import com.ayagmar.jobapplicationtracker.model.record.country.SimpleCountryResponse;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 

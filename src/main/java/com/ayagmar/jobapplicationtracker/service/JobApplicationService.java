@@ -1,14 +1,14 @@
 package com.ayagmar.jobapplicationtracker.service;
 
 import com.ayagmar.jobapplicationtracker.exception.EntityNotFoundException;
-import com.ayagmar.jobapplicationtracker.model.ApplicationStatus;
-import com.ayagmar.jobapplicationtracker.model.DocumentType;
 import com.ayagmar.jobapplicationtracker.model.JobApplication;
+import com.ayagmar.jobapplicationtracker.model.enums.ApplicationStatus;
+import com.ayagmar.jobapplicationtracker.model.enums.DocumentType;
 import com.ayagmar.jobapplicationtracker.model.mapper.JobApplicationMapper;
-import com.ayagmar.jobapplicationtracker.model.record.JobApplicationRequest;
-import com.ayagmar.jobapplicationtracker.model.record.JobApplicationResponse;
 import com.ayagmar.jobapplicationtracker.model.record.PaginatedResponse;
 import com.ayagmar.jobapplicationtracker.model.record.PaginatedResponseFactory;
+import com.ayagmar.jobapplicationtracker.model.record.jobapplication.JobApplicationRequest;
+import com.ayagmar.jobapplicationtracker.model.record.jobapplication.JobApplicationResponse;
 import com.ayagmar.jobapplicationtracker.repository.DocumentRepository;
 import com.ayagmar.jobapplicationtracker.repository.JobApplicationRepository;
 import com.ayagmar.jobapplicationtracker.repository.JobPostingRepository;

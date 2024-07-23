@@ -1,5 +1,6 @@
-package com.ayagmar.jobapplicationtracker.model.record;
+package com.ayagmar.jobapplicationtracker.model.record.interview;
 
+import com.ayagmar.jobapplicationtracker.model.record.jobapplication.JobApplicationResponse;
 import lombok.Data;
 
 import java.io.Serializable;

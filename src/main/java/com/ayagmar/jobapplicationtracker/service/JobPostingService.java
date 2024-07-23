@@ -3,10 +3,10 @@ package com.ayagmar.jobapplicationtracker.service;
 import com.ayagmar.jobapplicationtracker.exception.EntityNotFoundException;
 import com.ayagmar.jobapplicationtracker.model.JobPosting;
 import com.ayagmar.jobapplicationtracker.model.mapper.JobPostingMapper;
-import com.ayagmar.jobapplicationtracker.model.record.JobPostingRequest;
-import com.ayagmar.jobapplicationtracker.model.record.JobPostingResponse;
 import com.ayagmar.jobapplicationtracker.model.record.PaginatedResponse;
 import com.ayagmar.jobapplicationtracker.model.record.PaginatedResponseFactory;
+import com.ayagmar.jobapplicationtracker.model.record.jobposting.JobPostingRequest;
+import com.ayagmar.jobapplicationtracker.model.record.jobposting.JobPostingResponse;
 import com.ayagmar.jobapplicationtracker.repository.CityRepository;
 import com.ayagmar.jobapplicationtracker.repository.CompanyRepository;
 import com.ayagmar.jobapplicationtracker.repository.JobPostingRepository;
@@ -35,6 +35,7 @@ public class JobPostingService {
                 .orElseThrow(() -> new EntityNotFoundException("Company " + jobPostingRequest.getCompanyId() + " is not found"));
         jobPosting.setCity(city);
         jobPosting.setCompany(company);
+        jobPosting.setLocation(String.join(", ", city.getName(), city.getCountry().getCode()));
         var savedJobPosting = jobPostingRepository.save(jobPosting);
         return entityMapper.toDTO(savedJobPosting);
     }

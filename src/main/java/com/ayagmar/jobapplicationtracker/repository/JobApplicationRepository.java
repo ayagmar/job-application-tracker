@@ -1,7 +1,7 @@
 package com.ayagmar.jobapplicationtracker.repository;
 
-import com.ayagmar.jobapplicationtracker.model.ApplicationStatus;
 import com.ayagmar.jobapplicationtracker.model.JobApplication;
+import com.ayagmar.jobapplicationtracker.model.enums.ApplicationStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

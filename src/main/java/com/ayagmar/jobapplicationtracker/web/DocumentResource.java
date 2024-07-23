@@ -1,7 +1,7 @@
 package com.ayagmar.jobapplicationtracker.web;
 
-import com.ayagmar.jobapplicationtracker.model.record.DocumentRequest;
-import com.ayagmar.jobapplicationtracker.model.record.DocumentResponse;
+import com.ayagmar.jobapplicationtracker.model.record.document.DocumentRequest;
+import com.ayagmar.jobapplicationtracker.model.record.document.DocumentResponse;
 import com.ayagmar.jobapplicationtracker.service.DocumentService;
 import com.ayagmar.jobapplicationtracker.web.api.DocumentApi;
 import jakarta.validation.Valid;

@@ -1,5 +1,6 @@
 package com.ayagmar.jobapplicationtracker.model;
 
+import com.ayagmar.jobapplicationtracker.model.enums.DocumentType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

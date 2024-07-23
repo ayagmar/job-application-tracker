@@ -1,7 +1,6 @@
 package com.ayagmar.jobapplicationtracker.exception;
 
 
-import com.ayagmar.jobapplicationtracker.model.record.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -21,11 +19,6 @@ public class GlobalExceptionHandler {
         problemDetail.setProperty("errorCategory", "Generic Exception");
         problemDetail.setProperty("timestamp", Instant.now());
         return problemDetail;
-    }
-
-    private static ErrorResponse buildErrorResponse(String exceptionMessage, String details, int status) {
-        return new ErrorResponse(exceptionMessage,
-                details, status, LocalDateTime.now());
     }
 
     @ExceptionHandler(EntityNotFoundException.class)

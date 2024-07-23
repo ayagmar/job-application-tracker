@@ -2,13 +2,13 @@ package com.ayagmar.jobapplicationtracker.service;
 
 import com.ayagmar.jobapplicationtracker.exception.EntityNotFoundException;
 import com.ayagmar.jobapplicationtracker.exception.FieldAlreadyExists;
-import com.ayagmar.jobapplicationtracker.model.DocumentType;
 import com.ayagmar.jobapplicationtracker.model.User;
+import com.ayagmar.jobapplicationtracker.model.enums.DocumentType;
 import com.ayagmar.jobapplicationtracker.model.mapper.UserMapper;
 import com.ayagmar.jobapplicationtracker.model.record.PaginatedResponse;
 import com.ayagmar.jobapplicationtracker.model.record.PaginatedResponseFactory;
-import com.ayagmar.jobapplicationtracker.model.record.UserRequest;
-import com.ayagmar.jobapplicationtracker.model.record.UserResponse;
+import com.ayagmar.jobapplicationtracker.model.record.user.UserRequest;
+import com.ayagmar.jobapplicationtracker.model.record.user.UserResponse;
 import com.ayagmar.jobapplicationtracker.repository.DocumentRepository;
 import com.ayagmar.jobapplicationtracker.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

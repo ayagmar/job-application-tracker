@@ -1,8 +1,8 @@
 package com.ayagmar.jobapplicationtracker.model.mapper;
 
 import com.ayagmar.jobapplicationtracker.model.JobApplication;
-import com.ayagmar.jobapplicationtracker.model.record.JobApplicationRequest;
-import com.ayagmar.jobapplicationtracker.model.record.JobApplicationResponse;
+import com.ayagmar.jobapplicationtracker.model.record.jobapplication.JobApplicationRequest;
+import com.ayagmar.jobapplicationtracker.model.record.jobapplication.JobApplicationResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

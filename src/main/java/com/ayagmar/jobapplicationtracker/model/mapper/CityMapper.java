@@ -1,8 +1,8 @@
 package com.ayagmar.jobapplicationtracker.model.mapper;
 
 import com.ayagmar.jobapplicationtracker.model.City;
-import com.ayagmar.jobapplicationtracker.model.record.CityRequest;
-import com.ayagmar.jobapplicationtracker.model.record.CityResponse;
+import com.ayagmar.jobapplicationtracker.model.record.city.CityRequest;
+import com.ayagmar.jobapplicationtracker.model.record.city.CityResponse;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

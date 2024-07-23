@@ -1,6 +1,8 @@
-package com.ayagmar.jobapplicationtracker.model.record;
+package com.ayagmar.jobapplicationtracker.model.record.jobapplication;
 
-import com.ayagmar.jobapplicationtracker.model.ApplicationStatus;
+import com.ayagmar.jobapplicationtracker.model.enums.ApplicationStatus;
+import com.ayagmar.jobapplicationtracker.model.record.jobposting.JobPostingResponse;
+import com.ayagmar.jobapplicationtracker.model.record.user.UserResponse;
 import lombok.Data;
 
 import java.io.Serializable;

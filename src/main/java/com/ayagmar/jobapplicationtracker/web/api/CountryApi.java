@@ -1,7 +1,7 @@
 package com.ayagmar.jobapplicationtracker.web.api;
 
-import com.ayagmar.jobapplicationtracker.model.record.CountryRequest;
-import com.ayagmar.jobapplicationtracker.model.record.CountryResponse;
+import com.ayagmar.jobapplicationtracker.model.record.country.CountryRequest;
+import com.ayagmar.jobapplicationtracker.model.record.country.CountryResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

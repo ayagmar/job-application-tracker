@@ -1,8 +1,8 @@
 package com.ayagmar.jobapplicationtracker.web;
 
-import com.ayagmar.jobapplicationtracker.model.record.CityRequest;
-import com.ayagmar.jobapplicationtracker.model.record.CityResponse;
 import com.ayagmar.jobapplicationtracker.model.record.PaginatedResponse;
+import com.ayagmar.jobapplicationtracker.model.record.city.CityRequest;
+import com.ayagmar.jobapplicationtracker.model.record.city.CityResponse;
 import com.ayagmar.jobapplicationtracker.service.CityService;
 import com.ayagmar.jobapplicationtracker.web.api.CityApi;
 import lombok.RequiredArgsConstructor;

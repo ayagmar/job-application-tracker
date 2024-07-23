@@ -1,4 +1,4 @@
-package com.ayagmar.jobapplicationtracker.model.record;
+package com.ayagmar.jobapplicationtracker.model.record.company;
 
 import lombok.Data;
 

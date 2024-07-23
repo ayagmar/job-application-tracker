@@ -1,9 +1,9 @@
 package com.ayagmar.jobapplicationtracker.web.api;
 
-import com.ayagmar.jobapplicationtracker.model.ApplicationStatus;
-import com.ayagmar.jobapplicationtracker.model.record.JobApplicationRequest;
-import com.ayagmar.jobapplicationtracker.model.record.JobApplicationResponse;
+import com.ayagmar.jobapplicationtracker.model.enums.ApplicationStatus;
 import com.ayagmar.jobapplicationtracker.model.record.PaginatedResponse;
+import com.ayagmar.jobapplicationtracker.model.record.jobapplication.JobApplicationRequest;
+import com.ayagmar.jobapplicationtracker.model.record.jobapplication.JobApplicationResponse;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,6 @@
-package com.ayagmar.jobapplicationtracker.model.record;
+package com.ayagmar.jobapplicationtracker.model.record.document;
 
-import com.ayagmar.jobapplicationtracker.model.DocumentType;
+import com.ayagmar.jobapplicationtracker.model.enums.DocumentType;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 

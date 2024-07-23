@@ -1,8 +1,8 @@
 package com.ayagmar.jobapplicationtracker.web;
 
-import com.ayagmar.jobapplicationtracker.model.record.JobPostingRequest;
-import com.ayagmar.jobapplicationtracker.model.record.JobPostingResponse;
 import com.ayagmar.jobapplicationtracker.model.record.PaginatedResponse;
+import com.ayagmar.jobapplicationtracker.model.record.jobposting.JobPostingRequest;
+import com.ayagmar.jobapplicationtracker.model.record.jobposting.JobPostingResponse;
 import com.ayagmar.jobapplicationtracker.service.JobPostingService;
 import com.ayagmar.jobapplicationtracker.web.api.JobPostingApi;
 import lombok.RequiredArgsConstructor;

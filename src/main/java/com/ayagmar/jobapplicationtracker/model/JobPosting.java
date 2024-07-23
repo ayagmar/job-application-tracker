@@ -1,5 +1,7 @@
 package com.ayagmar.jobapplicationtracker.model;
 
+import com.ayagmar.jobapplicationtracker.model.enums.EmploymentStatus;
+import com.ayagmar.jobapplicationtracker.model.enums.WorkplaceType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,6 +32,12 @@ public class JobPosting extends Auditable {
 
     @Column(nullable = false)
     private String position;
+
+    private String location;
+
+    private EmploymentStatus employmentStatus;
+
+    private WorkplaceType workplaceType;
 
     private String url;
 

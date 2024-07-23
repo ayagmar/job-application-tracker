@@ -158,7 +158,13 @@
   {
     "name": "Canada",
     "code": "CA",
-    "cities": ["Toronto", "Montreal", "Vancouver", "Calgary", "Ottawa"]
+    "cities": [
+      "Toronto",
+      "Montreal",
+      "Vancouver",
+      "Calgary",
+      "Ottawa"
+    ]
   },
   {
     "name": "Cape Verde",
@@ -687,7 +693,15 @@
   {
     "name": "Morocco",
     "code": "MA",
-    "cities": ["Rabat", "Temara", "Tanger", "Tetouan", "Casablanca", "Agadir", "Merrakech"]
+    "cities": [
+      "Rabat",
+      "Temara",
+      "Tanger",
+      "Tetouan",
+      "Casablanca",
+      "Agadir",
+      "Merrakech"
+    ]
   },
   {
     "name": "Mozambique",
@@ -968,7 +982,53 @@
   {
     "name": "Switzerland",
     "code": "CH",
-    "cities": ["Basel", "Bern", "Zürich", "Geneva", "Lausanne", "Winterthur", "Lugano"]
+    "cities": [
+      "Zürich",
+      "Geneva",
+      "Basel",
+      "Lausanne",
+      "Bern",
+      "Winterthur",
+      "Lucerne",
+      "Sankt Gallen",
+      "Biel/Bienne",
+      "Bellinzona",
+      "Thun",
+      "Fribourg",
+      "Uster",
+      "Schaffhausen",
+      "Chur",
+      "Vernier",
+      "Sion",
+      "Neuchâtel",
+      "Zug",
+      "Yverdon-les-Bains",
+      "Emmen",
+      "Dübendorf",
+      "Rapperswil-Jona",
+      "Dietikon",
+      "Wetzikon",
+      "Meyrin",
+      "Carouge",
+      "Frauenfeld",
+      "Kreuzlingen",
+      "Wädenswil",
+      "Aarau",
+      "Riehen",
+      "Allschwil",
+      "Renens",
+      "Wettingen",
+      "Nyon",
+      "Bülach",
+      "Vevey",
+      "Opfikon",
+      "Reinach",
+      "Baden",
+      "Onex",
+      "Schlieren",
+      "Adliswil",
+      "Volketswil"
+    ]
   },
   {
     "name": "Syrian Arab Republic",
@@ -1049,7 +1109,13 @@
   {
     "name": "United States",
     "code": "US",
-    "cities": ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix"]
+    "cities": [
+      "New York",
+      "Los Angeles",
+      "Chicago",
+      "Houston",
+      "Phoenix"
+    ]
   },
   {
     "name": "United States Minor Outlying Islands",

@@ -1,5 +1,6 @@
 package com.ayagmar.jobapplicationtracker.model;
 
+import com.ayagmar.jobapplicationtracker.model.enums.DocumentType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;

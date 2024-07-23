@@ -3,7 +3,7 @@ package com.ayagmar.jobapplicationtracker.service;
 import com.ayagmar.jobapplicationtracker.model.City;
 import com.ayagmar.jobapplicationtracker.model.Country;
 import com.ayagmar.jobapplicationtracker.model.InitializationStatus;
-import com.ayagmar.jobapplicationtracker.model.record.CountryWithCitiesDTO;
+import com.ayagmar.jobapplicationtracker.model.record.country.CountryWithCitiesDTO;
 import com.ayagmar.jobapplicationtracker.repository.CountryRepository;
 import com.ayagmar.jobapplicationtracker.repository.InitializationStatusRepository;
 import com.fasterxml.jackson.core.type.TypeReference;

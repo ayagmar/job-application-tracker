@@ -5,7 +5,7 @@ import com.ayagmar.jobapplicationtracker.model.Country;
 import com.ayagmar.jobapplicationtracker.model.mapper.CountryMapper;
 import com.ayagmar.jobapplicationtracker.model.record.PaginatedResponse;
 import com.ayagmar.jobapplicationtracker.model.record.PaginatedResponseFactory;
-import com.ayagmar.jobapplicationtracker.model.record.SimpleCountryResponse;
+import com.ayagmar.jobapplicationtracker.model.record.country.SimpleCountryResponse;
 import com.ayagmar.jobapplicationtracker.repository.CountryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

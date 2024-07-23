@@ -1,18 +1,16 @@
-package com.ayagmar.jobapplicationtracker.model.record;
+package com.ayagmar.jobapplicationtracker.model.record.country;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CountryWithCitiesDTO implements Serializable {
-    private Long id;
+public class CountryRequest implements Serializable {
     private String name;
     private String code;
-    private List<String> cities;
 }

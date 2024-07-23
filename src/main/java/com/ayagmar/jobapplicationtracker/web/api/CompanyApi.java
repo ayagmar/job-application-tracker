@@ -1,8 +1,8 @@
 package com.ayagmar.jobapplicationtracker.web.api;
 
-import com.ayagmar.jobapplicationtracker.model.record.CompanyRequest;
-import com.ayagmar.jobapplicationtracker.model.record.CompanyResponse;
 import com.ayagmar.jobapplicationtracker.model.record.PaginatedResponse;
+import com.ayagmar.jobapplicationtracker.model.record.company.CompanyRequest;
+import com.ayagmar.jobapplicationtracker.model.record.company.CompanyResponse;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
