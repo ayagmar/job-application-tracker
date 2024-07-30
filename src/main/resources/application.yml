@@ -6,7 +6,9 @@ management:
       exposure:
         include: 'prometheus,health,caches'
 
-
+job:
+  api:
+    base-url: http://localhost:8000
 #db
 spring:
   h2:
@@ -21,6 +23,11 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create-drop
+  cloud:
+    openfeign:
+      autoconfiguration:
+        jackson:
+          enabled: true
 
 
 springdoc:
@@ -46,3 +53,4 @@ logging:
           descriptor:
             sql:
               BasicBinder: TRACE
+

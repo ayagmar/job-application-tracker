@@ -18,6 +18,11 @@
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
         <org.apache.commons.version>3.14.0</org.apache.commons.version>
         <org.springdoc.openapi.version>2.6.0</org.springdoc.openapi.version>
+        <openapi.url>http://localhost:8000/openapi.json</openapi.url>
+        <openapi.generator.version>7.7.0</openapi.generator.version>
+        <openapi.file>${project.basedir}/src/main/resources/openapi-templates/openapi.json</openapi.file>
+
+
     </properties>
     <dependencies>
         <dependency>
@@ -91,6 +96,12 @@
             <artifactId>commons-lang3</artifactId>
             <version>${org.apache.commons.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>0.2.6</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.springdoc</groupId>
@@ -105,6 +116,28 @@
             <groupId>com.github.ben-manes.caffeine</groupId>
             <artifactId>caffeine</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>0.2.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-jackson</artifactId>
+            <version>13.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.17.2</version>
+        </dependency>
+
 
     </dependencies>
 
@@ -171,7 +204,73 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <id>fetch-openapi-file</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>curl</executable>
+                            <arguments>
+                                <argument>-o</argument>
+                                <argument>${openapi.file}</argument>
+                                <argument>${openapi.url}</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>${openapi.generator.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/openapi-templates/openapi.json</inputSpec>
+                            <generatorName>spring</generatorName>
+                            <apiPackage>com.ayagmar.jobscraper.api</apiPackage>
+                            <modelPackage>com.ayagmar.jobscraper.model</modelPackage>
+                            <configOptions>
+                                <delegatePattern>true</delegatePattern>
+                                <interfaceOnly>true</interfaceOnly>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <useJakartaEe>true</useJakartaEe>
+                                <useTags>true</useTags>
+                                <dateLibrary>java8-localdatetime</dateLibrary>
+                            </configOptions>
+                            <skipValidateSpec>true</skipValidateSpec>
+                            <templateDirectory>${project.basedir}/src/main/resources/openapi-templates
+                            </templateDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>2022.0.3</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 
 </project>

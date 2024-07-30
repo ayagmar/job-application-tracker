@@ -35,7 +35,7 @@ public interface CityApi {
     @Operation(summary = "Fetch a paginated cities list from database", description = "Retrieves cities pageable from Database")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "successful operation")})
     @GetMapping("/{id}")
-    ResponseEntity<CityResponse> getCityById(@PathVariable Long id);
+    ResponseEntity<CityResponse> getCityById(@Parameter(description = "Existing City Id") @PathVariable Long id);
 
     @Operation(summary = "Delete city", description = "Deletes a city from the database")
     @ApiResponses(value = {@ApiResponse(responseCode = "204", description = "successful operation")})
