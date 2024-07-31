@@ -40,6 +40,7 @@ public class JobPosting extends Auditable {
 
     private String summary;
 
+    @Column(length = 10000)
     private String description;
 
     private String url;

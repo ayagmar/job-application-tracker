@@ -2,6 +2,7 @@ package com.ayagmar.jobapplicationtracker.jobposting.batch;
 
 import com.ayagmar.jobscraper.api.JobsApi;
 import com.ayagmar.jobscraper.model.JobListingResponse;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.ItemProcessor;
@@ -14,7 +15,7 @@ public class JobListingProcessor implements ItemProcessor<ScraperConfig.QueryCon
     private final JobsApi jobsApi;
 
     @Override
-    public List<JobListingResponse> process(ScraperConfig.QueryConfig queryConfig) {
+    public List<JobListingResponse> process(@NonNull ScraperConfig.QueryConfig queryConfig) {
         log.info("Processing query: {}", queryConfig);
         try {
             return jobsApi.scrapeJobs(

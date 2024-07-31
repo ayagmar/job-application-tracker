@@ -13,13 +13,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@RequiredArgsConstructor
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class JobScraperService {
     private final JobsApi jobsApi;
     private final JobLauncher jobLauncher;
     private final Job scraperJob;
+    private final Job getJobListingsJob;
 
     public List<JobListingResponse> scrapeJobs(String jobTitle, String country, Integer pages, String source) {
         return jobsApi.scrapeJobs(jobTitle, country, pages, source);
@@ -31,15 +32,27 @@ public class JobScraperService {
 
     @Scheduled(fixedDelayString = "${scraper.fixedDelay}")
     public void scheduledScraping() {
-        startScraping();
+        runScraperJob();
+        runGetJobListingsJob();
     }
 
-    public void startScraping() {
+    public void runScraperJob() {
         try {
             JobParameters jobParameters = new JobParametersBuilder()
                     .addLong("time", System.currentTimeMillis())
                     .toJobParameters();
             jobLauncher.run(scraperJob, jobParameters);
+        } catch (Exception e) {
+            log.error("Error during job execution", e);
+        }
+    }
+
+    public void runGetJobListingsJob() {
+        try {
+            JobParameters jobParameters = new JobParametersBuilder()
+                    .addLong("time", System.currentTimeMillis())
+                    .toJobParameters();
+            jobLauncher.run(getJobListingsJob, jobParameters);
         } catch (Exception e) {
             log.error("Error during job execution", e);
         }

@@ -1,6 +1,9 @@
 package com.ayagmar.jobapplicationtracker.jobposting.batch;
 
 import com.ayagmar.jobapplicationtracker.jobposting.domain.JobPosting;
+import com.ayagmar.jobapplicationtracker.jobposting.repository.JobPostingRepository;
+import com.ayagmar.jobapplicationtracker.location.repository.CityRepository;
+import com.ayagmar.jobapplicationtracker.location.service.CompanyService;
 import com.ayagmar.jobscraper.api.JobsApi;
 import com.ayagmar.jobscraper.model.JobListingResponse;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +17,7 @@ import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.support.ListItemReader;
 import org.springframework.batch.item.support.builder.CompositeItemProcessorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,16 +30,22 @@ import java.util.List;
 @Slf4j
 public class JobScraperBatchConfig {
 
-    private static final String JOB_NAME = "scraperJob";
-    private static final String STEP_NAME = "scraperStep";
+    private static final String SCRAPER_JOB_NAME = "scraperJob";
+    private static final String SCRAPER_JOB_STEP = "scraperStep";
+
+    private static final String GET_JOB_LISTINGS_JOB_NAME = "getJobListingsJob";
+    private static final String GET_JOB_LISTINGS_STEPS = "getJobsStep";
     private final JobsApi jobsApi;
     private final ScraperConfig scraperConfig;
     private final JobRepository jobRepository;
     private final PlatformTransactionManager transactionManager;
+    private final CompanyService companyService;
+    private final JobPostingRepository jobPostingRepository;
+    private final CityRepository cityRepository;
 
     @Bean
     public Job scraperJob(Step scraperStep) {
-        return new JobBuilder(JOB_NAME, jobRepository)
+        return new JobBuilder(SCRAPER_JOB_NAME, jobRepository)
                 .incrementer(new RunIdIncrementer())
                 .flow(scraperStep)
                 .end()
@@ -44,10 +54,29 @@ public class JobScraperBatchConfig {
 
     @Bean
     public Step scraperStep() {
-        return new StepBuilder(STEP_NAME, jobRepository)
+        return new StepBuilder(SCRAPER_JOB_STEP, jobRepository)
                 .<ScraperConfig.QueryConfig, List<JobPosting>>chunk(1, transactionManager)
                 .reader(queryConfigReader())
                 .processor(compositeProcessor())
+                .writer(jobPostingWriter())
+                .build();
+    }
+
+    @Bean
+    public Job getJobListingsJob(Step getJobListingsStep) {
+        return new JobBuilder(GET_JOB_LISTINGS_JOB_NAME, jobRepository)
+                .incrementer(new RunIdIncrementer())
+                .flow(getJobListingsStep)
+                .end()
+                .build();
+    }
+
+    @Bean
+    public Step getJobListingsStep() {
+        return new StepBuilder(GET_JOB_LISTINGS_STEPS, jobRepository)
+                .<List<JobListingResponse>, List<JobPosting>>chunk(1, transactionManager)
+                .reader(getJobsReader())
+                .processor(jobPostingProcessor())
                 .writer(jobPostingWriter())
                 .build();
     }
@@ -64,7 +93,7 @@ public class JobScraperBatchConfig {
 
     @Bean
     public ItemProcessor<List<JobListingResponse>, List<JobPosting>> jobPostingProcessor() {
-        return new JobPostingProcessor();
+        return new JobPostingProcessor(companyService, cityRepository);
     }
 
     @Bean
@@ -76,6 +105,15 @@ public class JobScraperBatchConfig {
 
     @Bean
     public ItemWriter<List<JobPosting>> jobPostingWriter() {
-        return new JobPostingWriter();
+        return new JobPostingWriter(jobPostingRepository);
     }
+
+
+    @Bean
+    public ItemReader<List<JobListingResponse>> getJobsReader() {
+        List<JobListingResponse> jobs = jobsApi.getJobs();
+        log.info("Retrieved {} jobs", jobs.size());
+        return new ListItemReader<>(List.of(jobs));
+    }
+
 }

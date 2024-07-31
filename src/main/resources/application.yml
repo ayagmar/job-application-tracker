@@ -33,18 +33,18 @@ spring:
           enabled: true
   batch:
     job:
-      enabled: true
+      enabled: false
     jdbc:
       initialize-schema: embedded
 
 scraper:
   fixedDelay: PT1H
   queries:
-    - jobTitle: "java developer"
-      country: "ch"
+    - jobTitle: "Java developer"
+      country: "fr"
       pages: 1
       source: "indeed"
-    - jobTitle: "java developer"
+    - jobTitle: "Spring developer"
       country: "fr"
       pages: 1
       source: "indeed"
