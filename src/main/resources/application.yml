@@ -6,9 +6,12 @@ management:
       exposure:
         include: 'prometheus,health,caches'
 
+
 job:
   api:
     base-url: http://localhost:8000
+    read-timeout: 300
+    connection-timeout: 10
 #db
 spring:
   h2:
@@ -28,6 +31,23 @@ spring:
       autoconfiguration:
         jackson:
           enabled: true
+  batch:
+    job:
+      enabled: true
+    jdbc:
+      initialize-schema: embedded
+
+scraper:
+  fixedDelay: PT1H
+  queries:
+    - jobTitle: "java developer"
+      country: "ch"
+      pages: 1
+      source: "indeed"
+    - jobTitle: "java developer"
+      country: "fr"
+      pages: 1
+      source: "indeed"
 
 
 springdoc:
