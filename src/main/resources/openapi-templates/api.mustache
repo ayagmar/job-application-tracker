@@ -3,12 +3,12 @@ package {{package}};
 import org.springframework.cloud.openfeign.FeignClient;
 import com.ayagmar.jobscraper.model.JobListingResponse;
 import com.ayagmar.jobscraper.model.HTTPValidationError;
-import com.ayagmar.jobapplicationtracker.configuration.FeignClientConfig;
+import com.ayagmar.jobapplicationtracker.common.configuration.FeignClientConfig;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
-@FeignClient(name = "{{classname}}Client", url = "${job.api.base-url}", configuration=FeignClientConfig.class)
+@FeignClient(name = "{{classname}}Client", url = "${job.api.base-url}", configuration = FeignClientConfig.class)
 public interface {{classname}} {
 
 @GetMapping("/api/v1/jobs")
