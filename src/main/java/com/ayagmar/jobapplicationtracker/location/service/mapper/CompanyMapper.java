@@ -1,14 +1,12 @@
 package com.ayagmar.jobapplicationtracker.location.service.mapper;
 
+import com.ayagmar.go.jobscraper.model.ScraperJobPosting;
 import com.ayagmar.jobapplicationtracker.location.domain.Company;
 import com.ayagmar.jobapplicationtracker.location.model.company.CompanyRequest;
 import com.ayagmar.jobapplicationtracker.location.model.company.CompanyResponse;
-import com.ayagmar.jobscraper.model.JobListingResponse;
-import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import org.openapitools.jackson.nullable.JsonNullable;
 
 @Mapper(componentModel = "spring")
 public interface CompanyMapper {
@@ -30,18 +28,9 @@ public interface CompanyMapper {
     @Mapping(source = "website", target = "website")
     CompanyResponse toCompanyResponse(Company company);
 
-    @Mapping(source = "company", target = "name")
-    @Mapping(source = "industry", target = "industry")
-    @Mapping(target = "website", expression = "java(mapCompanyDetailsUrl(jobListingResponse))")
-    CompanyRequest toCompanyRequest(JobListingResponse jobListingResponse);
+    @Mapping(target = "name", source = "companyDetails.name")
+    @Mapping(target = "industry", source = "companyDetails.industry")
+    @Mapping(target = "website", source = "companyDetails.url")
+    CompanyRequest toCompanyRequest(ScraperJobPosting jobListingResponse);
 
-    default String mapJsonNullableToString(JsonNullable<String> jsonNullable) {
-        return jsonNullable.orElse(StringUtils.EMPTY);
-    }
-
-    default String mapCompanyDetailsUrl(JobListingResponse jobListingResponse) {
-        return jobListingResponse.getCompanyUrl()
-                .orElse(jobListingResponse.getCompanyDetailsUrl()
-                        .orElse(StringUtils.EMPTY));
-    }
 }

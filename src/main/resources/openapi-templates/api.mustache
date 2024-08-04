@@ -1,11 +1,13 @@
 package {{package}};
 
 import org.springframework.cloud.openfeign.FeignClient;
-import com.ayagmar.jobscraper.model.JobListingResponse;
-import com.ayagmar.jobscraper.model.HTTPValidationError;
-import com.ayagmar.jobapplicationtracker.common.configuration.FeignClientConfig;
+import com.ayagmar.go.jobscraper.model.ApiSuccessResponse;
+import com.ayagmar.go.jobscraper.model.ScraperJobPosting;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import com.ayagmar.jobapplicationtracker.common.configuration.FeignClientConfig;
+
 import java.util.List;
 
 @FeignClient(name = "{{classname}}Client", url = "${job.api.base-url}", configuration = FeignClientConfig.class)
@@ -13,14 +15,11 @@ public interface {{classname}} {
 
 @GetMapping("/api/v1/jobs")
 List
-<JobListingResponse> getJobs();
+<ScraperJobPosting> getJobs();
 
-    @GetMapping("/api/v1/scrape-jobs")
-    List
-    <JobListingResponse> scrapeJobs(
-        @RequestParam("job_title") String jobTitle,
-        @RequestParam(value = "country", defaultValue = "us") String country,
-        @RequestParam(value = "pages", defaultValue = "1") Integer pages,
-        @RequestParam(value = "source", defaultValue = "indeed") String source
-        );
-        }
+    @PostMapping("/api/v1/scrape")
+    ApiSuccessResponse scrapeJobs(@RequestParam("jobTitle") String jobTitle, @RequestParam(value = "country") String
+    country,
+    @RequestParam(value = "pages", defaultValue = "1") Integer pages,
+    @RequestParam(value = "source") String source );
+    }

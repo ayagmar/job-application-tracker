@@ -1,6 +1,6 @@
 package com.ayagmar.jobapplicationtracker.common.configuration;
 
-import com.ayagmar.jobscraper.api.JobsApi;
+import com.ayagmar.go.jobscraper.api.JobScraperApi;
 import feign.Logger;
 import feign.Request;
 import feign.Retryer;
@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
-@EnableFeignClients(clients = {JobsApi.class})
+@EnableFeignClients(clients = {JobScraperApi.class})
 @RequiredArgsConstructor
 public class FeignClientConfig {
     @Value("${job.api.connection-timeout}")

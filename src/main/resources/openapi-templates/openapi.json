@@ -1,319 +1,203 @@
 {
-  "openapi": "3.1.0",
-  "info": {
-    "title": "Job Scraper API",
-    "version": "1.0.0"
-  },
-  "paths": {
-    "/api/v1/scrape-jobs": {
-      "get": {
-        "tags": [
-          "Jobs"
-        ],
-        "summary": "Scrape Job Listings",
-        "description": "Scrape job listings from specified job sources.",
-        "operationId": "scrape_jobs_api_v1_scrape_jobs_get",
-        "parameters": [
-          {
-            "name": "job_title",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "description": "Job title to search for.",
-              "title": "Job Title"
-            },
-            "description": "Job title to search for."
-          },
-          {
-            "name": "country",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "description": "Country code (e.g., 'us' for the United States, 'fr' for France).",
-              "default": "us",
-              "title": "Country"
-            },
-            "description": "Country code (e.g., 'us' for the United States, 'fr' for France)."
-          },
-          {
-            "name": "pages",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "maximum": 10,
-              "minimum": 1,
-              "description": "Number of pages to scrape (1-10).",
-              "default": 1,
-              "title": "Pages"
-            },
-            "description": "Number of pages to scrape (1-10)."
-          },
-          {
-            "name": "source",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "description": "Job source to scrape (e.g., 'indeed', 'linkedin').",
-              "default": "indeed",
-              "title": "Source"
-            },
-            "description": "Job source to scrape (e.g., 'indeed', 'linkedin')."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/JobListingResponse"
-                  },
-                  "title": "Response Scrape Jobs Api V1 Scrape Jobs Get"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
+    "schemes": [],
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a job scraper application.",
+        "title": "Job Scraper API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {},
+        "version": "1.0"
     },
-    "/api/v1/jobs": {
-      "get": {
-        "tags": [
-          "Jobs"
-        ],
-        "summary": "Get Job Listings",
-        "description": "Retrieve all job listings from the database.",
-        "operationId": "get_jobs_api_v1_jobs_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/JobListingResponse"
-                  },
-                  "type": "array",
-                  "title": "Response Get Jobs Api V1 Jobs Get"
+    "host": "",
+    "basePath": "/api/v1",
+    "paths": {
+        "/jobs": {
+            "get": {
+                "description": "Get a list of jobs",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "jobScraper"
+                ],
+                "summary": "Get jobs",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/scraper.JobPosting"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/api.ErrorResponse"
+                        }
+                    }
                 }
-              }
             }
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "HTTPValidationError": {
-        "properties": {
-          "detail": {
-            "items": {
-              "$ref": "#/components/schemas/ValidationError"
-            },
-            "type": "array",
-            "title": "Detail"
-          }
         },
-        "type": "object",
-        "title": "HTTPValidationError"
-      },
-      "JobListingResponse": {
-        "properties": {
-          "id": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Id",
-            "description": "Job listing ID"
-          },
-          "title": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Title",
-            "description": "Job title"
-          },
-          "company": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Company",
-            "description": "Company name"
-          },
-          "location": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Location",
-            "description": "Job location"
-          },
-          "summary": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Summary",
-            "description": "Job summary"
-          },
-          "url": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Url",
-            "description": "Job URL"
-          },
-          "full_job_description": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Full Job Description",
-            "description": "Full job description"
-          },
-          "company_details_url": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Company Details Url",
-            "description": "Company details URL"
-          },
-          "company_url": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Company Url",
-            "description": "Company URL"
-          },
-          "industry": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Industry",
-            "description": "Industry"
-          },
-          "date_scraped": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Date Scraped",
-            "description": "Date job was scraped"
-          },
-          "source": {
-            "type": "string",
-            "title": "Source",
-            "description": "Job source (e.g., 'indeed', 'linkedin')"
-          }
-        },
-        "type": "object",
-        "required": [
-          "source"
-        ],
-        "title": "JobListingResponse"
-      },
-      "ValidationError": {
-        "properties": {
-          "loc": {
-            "items": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "integer"
+        "/scrape": {
+            "post": {
+                "description": "Start scraping jobs based on the provided configuration",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "jobScraper"
+                ],
+                "summary": "Start scraping",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "JobPosting Title",
+                        "name": "jobTitle",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Country",
+                        "name": "country",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "Number of Pages",
+                        "name": "pages",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            "indeed",
+                            "linkedin"
+                        ],
+                        "type": "string",
+                        "description": "Source of job listings (indeed or linkedin)",
+                        "name": "source",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/api.SuccessResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.ErrorResponse"
+                        }
+                    },
+                    "501": {
+                        "description": "Not Implemented",
+                        "schema": {
+                            "$ref": "#/definitions/api.ErrorResponse"
+                        }
+                    }
                 }
-              ]
-            },
-            "type": "array",
-            "title": "Location"
-          },
-          "msg": {
-            "type": "string",
-            "title": "Message"
-          },
-          "type": {
-            "type": "string",
-            "title": "Error Type"
-          }
+            }
+        }
+    },
+    "definitions": {
+        "api.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
         },
-        "type": "object",
-        "required": [
-          "loc",
-          "msg",
-          "type"
-        ],
-        "title": "ValidationError"
-      }
+        "api.SuccessResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "scraper.CompanyDetails": {
+            "description": "Company details",
+            "type": "object",
+            "properties": {
+                "industry": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "platform_company_url": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "scraper.JobPosting": {
+            "description": "Job posting details",
+            "type": "object",
+            "properties": {
+                "company_details": {
+                    "$ref": "#/definitions/scraper.CompanyDetails"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "platform_job_id": {
+                    "type": "string"
+                },
+                "source": {
+                    "$ref": "#/definitions/scraper.ScraperType"
+                },
+                "summary": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "scraper.ScraperType": {
+            "description": "Type of job scraper",
+            "type": "string",
+            "enum": [
+                "indeed",
+                "linkedin"
+            ],
+            "x-enum-varnames": [
+                "Indeed",
+                "LinkedIn"
+            ]
+        }
     }
-  }
 }
