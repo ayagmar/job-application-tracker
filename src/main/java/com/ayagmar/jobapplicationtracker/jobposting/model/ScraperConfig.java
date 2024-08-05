@@ -1,4 +1,4 @@
-package com.ayagmar.jobapplicationtracker.jobposting.batch;
+package com.ayagmar.jobapplicationtracker.jobposting.model;
 
 
 import lombok.Data;

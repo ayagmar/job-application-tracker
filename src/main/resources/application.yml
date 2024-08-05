@@ -66,6 +66,7 @@ springdoc:
 
 logging:
   level:
+    com.ayagmar.go.jobscraper.api.JobScraperApi: WARN
     org:
       hibernate:
         SQL: INFO

@@ -69,6 +69,12 @@ public class CityService {
         }
     }
 
+    @Transactional(readOnly = true)
+    public City findCityByLocationContaining(String location) {
+        return cityRepository.findByCityNameContainingIgnoreCase(location)
+                .orElseThrow(() -> new EntityNotFoundException("City not found for location: " + location));
+    }
+
 
     private void validateName(String name) {
         cityRepository.findCityByName(name).ifPresent(company -> {

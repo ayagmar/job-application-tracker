@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.ayagmar</groupId>
     <artifactId>job-application-tracker</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
     <name>job-application-tracker</name>
     <description>simple spring boot api to track job applications</description>
     <properties>
@@ -18,7 +18,7 @@
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
         <org.apache.commons.version>3.14.0</org.apache.commons.version>
         <org.springdoc.openapi.version>2.6.0</org.springdoc.openapi.version>
-        <openapi.url>http://localhost:8000/openapi.json</openapi.url>
+        <openapi.url>http://localhost:8000/swagger/doc.json</openapi.url>
         <openapi.generator.version>7.7.0</openapi.generator.version>
         <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
         <feign-jackson.version>13.3</feign-jackson.version>
@@ -137,10 +137,7 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>${jackson-datatype-jsr310.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-batch</artifactId>
-        </dependency>
+
 
 
     </dependencies>
@@ -243,8 +240,8 @@
                         <configuration>
                             <inputSpec>${project.basedir}/src/main/resources/openapi-templates/openapi.json</inputSpec>
                             <generatorName>spring</generatorName>
-                            <apiPackage>com.ayagmar.jobscraper.api</apiPackage>
-                            <modelPackage>com.ayagmar.jobscraper.model</modelPackage>
+                            <apiPackage>com.ayagmar.go.jobscraper.api</apiPackage>
+                            <modelPackage>com.ayagmar.go.jobscraper.model</modelPackage>
                             <configOptions>
                                 <delegatePattern>true</delegatePattern>
                                 <interfaceOnly>true</interfaceOnly>
@@ -252,8 +249,8 @@
                                 <useJakartaEe>true</useJakartaEe>
                                 <useTags>true</useTags>
                                 <dateLibrary>java8-localdatetime</dateLibrary>
+                                <basePackage>com.ayagmar.go.jobscraper</basePackage>
                             </configOptions>
-                            <skipValidateSpec>true</skipValidateSpec>
                             <templateDirectory>${project.basedir}/src/main/resources/openapi-templates
                             </templateDirectory>
                         </configuration>
