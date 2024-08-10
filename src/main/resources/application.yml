@@ -14,18 +14,19 @@ job:
     connection-timeout: 10
 #db
 spring:
-  h2:
-    console:
-      enabled: 'true'
   datasource:
-    username: sa
-    url: jdbc:h2:mem:testdb
-    driverClassName: org.h2.Driver
-    password: ''
+    driver-class-name: org.postgresql.Driver
+    username: ${SPRING_DATASOURCE_USERNAME:jobuser}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/jobapps}
+    password: ${SPRING_DATASOURCE_PASSWORD:jobpassword}
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: 'true'
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:create-drop}
+
   cloud:
     openfeign:
       autoconfiguration:
@@ -67,11 +68,4 @@ springdoc:
 logging:
   level:
     com.ayagmar.go.jobscraper.api.JobScraperApi: WARN
-    org:
-      hibernate:
-        SQL: INFO
-        type:
-          descriptor:
-            sql:
-              BasicBinder: TRACE
 

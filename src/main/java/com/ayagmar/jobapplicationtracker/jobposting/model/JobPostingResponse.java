@@ -11,6 +11,7 @@ import java.io.Serializable;
 @Data
 public class JobPostingResponse implements Serializable {
     private Long id;
+    private String platformJobId;
     private String position;
     private String url;
     private EmploymentStatus employmentStatus;

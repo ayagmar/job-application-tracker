@@ -15,5 +15,6 @@ public class JobPostingRequest implements Serializable {
     private EmploymentStatus employmentStatus;
     private Long companyId;
     private Long cityId;
+    private String platformJobId;
 
 }
