@@ -32,6 +32,7 @@ public class JobPosting extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String platformJobId;
 
     @Column(nullable = false)
     private String position;

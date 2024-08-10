@@ -1,43 +1,28 @@
 version: '3.8'
 
 services:
-  postgres:
-    container_name: postgres_container
-    image: postgres
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
-      PGDATA: /data/postgres
-    volumes:
-      - postgres:/data/postgres
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/jobapps
+      SPRING_DATASOURCE_USERNAME: jobuser
+      SPRING_DATASOURCE_PASSWORD: jobpassword
+      SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
+
+  db:
+    image: postgres:13
     ports:
       - "5432:5432"
-    networks:
-      - postgres
-    restart: unless-stopped
-
-  pgadmin:
-    container_name: pgadmin_container
-    image: dpage/pgadmin4
     environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      POSTGRES_DB: jobapps
+      POSTGRES_USER: jobuser
+      POSTGRES_PASSWORD: jobpassword
     volumes:
-      - pgadmin:/var/lib/pgadmin
-
-    ports:
-      - "${PGADMIN_PORT:-5050}:80"
-    networks:
-      - postgres
-    restart: unless-stopped
-    logging:
-      driver: "none"
-
-networks:
-  postgres:
-    driver: bridge
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
-  postgres:
-  pgadmin:
+  postgres_data:

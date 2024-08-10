@@ -51,8 +51,8 @@ public class JobScraperService {
     private void processQueryConfig(ScraperConfig.QueryConfig queryConfig) {
         log.info("Processing query: {}", queryConfig);
         try {
-            //ApiSuccessResponse scrapeResponse = initiateScrapingJob(queryConfig);
-            //log.info("Scraping initiated {}", scrapeResponse.getMessage());
+            ApiSuccessResponse scrapeResponse = initiateScrapingJob(queryConfig);
+            log.info("Scraping initiated {}", scrapeResponse.getMessage());
             List<ScraperJobPosting> scrapedJobs = retrieveScrapedJobs();
             List<JobPosting> processedJobs = processJobPostings(scrapedJobs);
             saveJobPostings(processedJobs);
@@ -107,10 +107,11 @@ public class JobScraperService {
     private JobPosting createJobPosting(ScraperJobPosting scrapedJob, CompanyResponse company) {
         return JobPosting.builder()
                 .position(scrapedJob.getTitle())
-                .url(scrapedJob.getCompanyDetails().getUrl())
+                .url(scrapedJob.getUrl())
                 .description(scrapedJob.getDescription())
                 .location(scrapedJob.getLocation())
                 .summary(scrapedJob.getSummary())
+                .platformJobId(scrapedJob.getPlatformJobId())
                 .city(cityService.findCityByLocationContaining(scrapedJob.getLocation()))
                 .company(CompanyMapper.INSTANCE.toCompany(company))
                 .build();
@@ -121,6 +122,5 @@ public class JobScraperService {
         jobPostingRepository.saveAll(jobPostings);
         log.info("Successfully saved {} job postings", jobPostings.size());
     }
-
 
 }
